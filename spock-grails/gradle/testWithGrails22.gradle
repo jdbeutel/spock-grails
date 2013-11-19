@@ -66,6 +66,9 @@ tasks.withType(GrailsTask).matching { it.name.endsWith("Grails22") }.all {
 }
 
 task testGrails22(type: GrailsTask) {
+  jvmOptions {
+    jvmArgs "-Dspock.configuration=test/ExcludingConfig.groovy"
+  }
   command "test-app"
   args "--stacktrace --non-interactive"
 }

@@ -56,7 +56,13 @@ class GrailsSpecTestType extends GrailsTestTypeSupport {
       if (SpecUtil.isRunnableSpec(specClass)) specClasses << specClass
     }
 
-    optimizeSpecRunOrderIfEnabled()
+    def prevContextClassLoader = Thread.currentThread().contextClassLoader
+    Thread.currentThread().contextClassLoader = getTestClassLoader()
+    try {
+      optimizeSpecRunOrderIfEnabled()
+    } finally {
+      Thread.currentThread().contextClassLoader = prevContextClassLoader
+    }
 
     featureCount = specClasses.sum(0) { SpecUtil.getFeatureCount(it) }
     featureCount

@@ -53,5 +53,8 @@ task installPluginGrails20(type: GrailsTask) {
 }
 
 task testGrails20(type: GrailsTask, dependsOn: installPluginGrails20) {
+  jvmOptions {
+    jvmArgs "-Dspock.configuration=test/ExcludingConfig.groovy"
+  }
   command "test-app"
 }
